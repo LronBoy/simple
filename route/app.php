@@ -9,9 +9,15 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 use think\facade\Route;
+use app\common\SystemResponse;
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP6!';
+# 不需要登录授权接口
+Route::group('openapi', function (){
+	# 调试
+	Route::get('xun_sou','OpenApi/xunSou');
 });
 
-Route::get('hello/:name', 'index/hello');
+# 404
+Route::miss(function () {
+	return app(SystemResponse::class)->json(404, '非法请求');
+});
